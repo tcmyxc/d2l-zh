@@ -197,7 +197,7 @@ $\eta$表示*学习率*（learning rate）。
 因为算法会使得损失向最小值缓慢收敛，但却不能在有限的步数内非常精确地达到最小值。
 
 线性回归恰好是一个在整个域中只有一个最小值的学习问题。
-但是对于像深度神经网络这样复杂的模型来说，损失平面上通常包含多个最小值。
+但是对像深度神经网络这样复杂的模型来说，损失平面上通常包含多个最小值。
 深度学习实践者很少会去花费大力气寻找这样一组参数，使得在*训练集*上的损失达到最小。
 事实上，更难做到的是找到一组参数，这组参数能够在我们从未见过的数据上实现较低的损失，
 这一挑战被称为*泛化*（generalization）。
@@ -223,7 +223,7 @@ $\eta$表示*学习率*（learning rate）。
 %matplotlib inline
 from d2l import mxnet as d2l
 import math
-import numpy as np
+from mxnet import np
 import time
 ```
 
@@ -350,7 +350,18 @@ def normal(x, mu, sigma):
 我们现在(**可视化正态分布**)。
 
 ```{.python .input}
-#@tab all
+#@tab mxnet
+# 再次使用numpy进行可视化
+x = np.arange(-7, 7, 0.01)
+# Mean and standard deviation pairs
+params = [(0, 1), (0, 2), (3, 1)]
+d2l.plot(x.asnumpy(), [normal(x, mu, sigma).asnumpy() for mu, sigma in params], xlabel='x',
+         ylabel='p(x)', figsize=(4.5, 2.5),
+         legend=[f'mean {mu}, std {sigma}' for mu, sigma in params])
+```
+
+```{.python .input}
+#@tab pytorch, tensorflow
 # 再次使用numpy进行可视化
 x = np.arange(-7, 7, 0.01)
 
@@ -448,9 +459,9 @@ $$-\log P(\mathbf y \mid \mathbf X) = \sum_{i=1}^n \frac{1}{2} \log(2 \pi \sigma
 这种想法归功于我们对真实生物神经系统的研究。
 
 当今大多数深度学习的研究几乎没有直接从神经科学中获得灵感。
-我们援引斯图尔特·罗素和彼得·诺维格谁，在他们的经典人工智能教科书
+我们援引斯图尔特·罗素和彼得·诺维格在他们的经典人工智能教科书
 *Artificial Intelligence:A Modern Approach* :cite:`Russell.Norvig.2016`
-中所说：虽然飞机可能受到鸟类的启发，但几个世纪以来，鸟类学并不是航空创新的主要驱动力。
+中所说的：虽然飞机可能受到鸟类的启发，但几个世纪以来，鸟类学并不是航空创新的主要驱动力。
 同样地，如今在深度学习中的灵感同样或更多地来自数学、统计学和计算机科学。
 
 ## 小结
@@ -472,8 +483,8 @@ $$-\log P(\mathbf y \mid \mathbf X) = \sum_{i=1}^n \frac{1}{2} \log(2 \pi \sigma
     1. 什么时候可能比使用随机梯度下降更好？这种方法何时会失效？
 1. 假定控制附加噪声$\epsilon$的噪声模型是指数分布。也就是说，$p(\epsilon) = \frac{1}{2} \exp(-|\epsilon|)$
     1. 写出模型$-\log P(\mathbf y \mid \mathbf X)$下数据的负对数似然。
-    1. 你能写出解析解吗？
-    1. 提出一种随机梯度下降算法来解决这个问题。哪里可能出错？（提示：当我们不断更新参数时，在驻点附近会发生什么情况）你能解决这个问题吗？
+    1. 请试着写出解析解。
+    1. 提出一种随机梯度下降算法来解决这个问题。哪里可能出错？（提示：当我们不断更新参数时，在驻点附近会发生什么情况）请尝试解决这个问题。
 
 :begin_tab:`mxnet`
 [Discussions](https://discuss.d2l.ai/t/1774)
